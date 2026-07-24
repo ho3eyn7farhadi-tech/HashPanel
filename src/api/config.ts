@@ -1,21 +1,38 @@
 import { createVLESS } from "../config/generator";
 
-export function configAPI(){
+export async function configAPI(request:Request){
 
-  const result = createVLESS({
-    name: "Hash User",
-    server: "example.com",
-    port: 443,
-    expireDays: 30,
-    volumeGB: 50
-  });
+let body:any={};
 
-  return new Response(
-    JSON.stringify(result),
-    {
-      headers:{
-        "content-type":"application/json"
-      }
-    }
-  );
+if(request.method==="POST"){
+ body=Object.fromEntries(
+   await request.formData()
+ );
+}
+
+
+const result=createVLESS({
+
+name:body.name || "Hash User",
+
+server:"example.com",
+
+port:443,
+
+expireDays:Number(body.days)||30,
+
+volumeGB:Number(body.volume)||50
+
+});
+
+
+return new Response(
+JSON.stringify(result,null,2),
+{
+headers:{
+"content-type":"application/json"
+}
+}
+);
+
 }

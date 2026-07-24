@@ -9,7 +9,7 @@ export default {
 
     const url = new URL(request.url);
 
-    const apiResponse = router(url.pathname);
+    const apiResponse = await router(url.pathname, request);
 
     if (apiResponse) {
       return apiResponse;
