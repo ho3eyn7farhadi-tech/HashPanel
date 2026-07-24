@@ -1,33 +1,20 @@
-import { createVLESS } from "../config/generator";
+import { generateConfig } from "../services/configManager";
 
 export async function configAPI(request:Request){
 
-let body:any={};
+let data:any={};
 
 if(request.method==="POST"){
- body=Object.fromEntries(
-   await request.formData()
- );
+data=Object.fromEntries(await request.formData());
 }
 
 
-const result=createVLESS({
-
-name:body.name || "Hash User",
-
-server:"example.com",
-
-port:443,
-
-expireDays:Number(body.days)||30,
-
-volumeGB:Number(body.volume)||50
-
-});
-
-
 return new Response(
-JSON.stringify(result,null,2),
+JSON.stringify(
+generateConfig(data),
+null,
+2
+),
 {
 headers:{
 "content-type":"application/json"

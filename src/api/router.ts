@@ -2,7 +2,7 @@ import { statusAPI } from "./status";
 import { adminPanel } from "../views/admin/panel";
 import { configAPI } from "./config";
 import { subscriptionAPI } from "./subscription";
-import { usersAPI } from "./users";
+import { telegramAPI } from "./telegram";
 
 
 export async function router(
@@ -10,27 +10,28 @@ path:string,
 request:Request
 ){
 
+
 if(path==="/api/status")
- return statusAPI();
-
-
-if(path==="/api/users")
- return usersAPI(request);
+return statusAPI();
 
 
 if(path==="/api/config/create")
- return configAPI(request);
+return configAPI(request);
 
 
 if(path==="/api/subscription/create")
- return subscriptionAPI();
+return subscriptionAPI();
+
+
+if(path==="/api/telegram/test")
+return telegramAPI();
 
 
 if(path==="/panel")
- return new Response(adminPanel(),{
- headers:{
- "content-type":"text/html;charset=UTF-8"
- }
+return new Response(adminPanel(),{
+headers:{
+"content-type":"text/html;charset=UTF-8"
+}
 });
 
 
