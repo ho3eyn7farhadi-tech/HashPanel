@@ -1,6 +1,7 @@
 import { statusAPI } from "./status";
 import { dashboard } from "../views/dashboard";
 import { configAPI } from "./config";
+import { subscriptionAPI } from "./subscription";
 
 export function router(path:string){
 
@@ -10,6 +11,10 @@ export function router(path:string){
 
   if(path === "/api/config/create"){
     return configAPI();
+  }
+
+  if(path === "/api/subscription/create"){
+    return subscriptionAPI();
   }
 
   if(path === "/panel"){
