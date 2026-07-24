@@ -1,6 +1,5 @@
-export interface Env {
-  APP_NAME: string;
-}
+import { router } from "./api/router";
+import type { Env } from "./types/env";
 
 export default {
   async fetch(
@@ -9,6 +8,12 @@ export default {
   ): Promise<Response> {
 
     const url = new URL(request.url);
+
+    const apiResponse = router(url.pathname);
+
+    if (apiResponse) {
+      return apiResponse;
+    }
 
     if (url.pathname === "/") {
       return new Response(
@@ -25,8 +30,11 @@ export default {
       );
     }
 
-    return new Response("HashPanel API Not Found", {
-      status: 404
-    });
+    return new Response(
+      "HashPanel API Not Found",
+      {
+        status: 404
+      }
+    );
   }
 };
